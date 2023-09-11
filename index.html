@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pomodoro Timer</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="shortcut icon" href="./assets/favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+    <main>
+        <header>
+            <h1>PoTi</h1>
+
+            <div class="top-but-cont">
+                <div class="focus-container">
+                    <label for="workDurationInput">Focus:</label>
+                    <input type="number" id="workDurationInput" max="600" value="25" min="1">
+                </div>
+                <div class="break-container">
+                    <label for="breakDurationInput">Break:</label>
+                    <input type="number" id="breakDurationInput" max="600" value="5" min="1">
+                </div>
+                <div class="update-but">
+                    <button id="updateDuration">Update</button>
+                </div>
+            </div>
+        </header>
+
+        <div id="timerDisplay">25:00</div>
+        <div id="statusMessage"></div>
+        <div class="but-container">
+            <button id="startButton">Start</button>
+            <button id="stopButton">Stop</button>
+            <button id="resetButton">Reset</button>
+        </div>
+    </main>
+    <script type="module" src="./dist/index.js"></script>
+
+    <audio id="focusNotificationSound" src="./assets/audio/focusnoti.mp3" preload="auto"></audio>
+    <audio id="breakNotificationSound" src="./assets/audio/breaknoti.mp3" preload="auto"></audio>
+</body>
+
+</html>
