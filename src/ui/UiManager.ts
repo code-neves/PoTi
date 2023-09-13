@@ -23,7 +23,6 @@ export class PomodoroUIManager {
     };
   }
 
-  // Add the handleModeChange method to handle mode changes in the UI
   public handleModeChange(mode: PomodoroMode) {
     const statusMessage = document.getElementById('statusMessage');
     if (statusMessage) {
@@ -35,7 +34,7 @@ export class PomodoroUIManager {
           statusMessage.textContent = 'Take a break';
           break;
         case PomodoroMode.None:
-          statusMessage.textContent = 'Click to start';
+          statusMessage.textContent = '';
           break;
       }
     }

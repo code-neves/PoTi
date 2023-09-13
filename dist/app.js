@@ -1,4 +1,3 @@
-// app.ts
 import { PomodoroTimer, PomodoroMode } from './timers/PomodoroTimer.js';
 class PomodoroApp {
     constructor() {

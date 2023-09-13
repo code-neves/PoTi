@@ -1,7 +1,6 @@
 import { PomodoroTimer, PomodoroMode } from './timers/PomodoroTimer.js';
 import { PomodoroUIManager } from './ui/UiManager.js';
 const uiManager = new PomodoroUIManager();
-// Declare HTML elements
 const workDurationInput = document.getElementById('workDurationInput');
 const breakDurationInput = document.getElementById('breakDurationInput');
 const updateDurationButton = document.getElementById('updateDuration');
@@ -9,7 +8,6 @@ const startButton = document.getElementById('startButton');
 const stopButton = document.getElementById('stopButton');
 const resetButton = document.getElementById('resetButton');
 const timerDisplay = document.getElementById('timerDisplay');
-// Function to update the background color based on the mode
 function updateBackgroundColor(mode) {
     const bgBody = document.querySelector('body');
     if (bgBody) {
@@ -32,7 +30,6 @@ const pomodoro = new PomodoroTimer(25, 5, (mode) => {
     updateBackgroundColor(mode);
     uiManager.handleModeChange(mode);
 });
-// Function to update work duration
 function updateDuration() {
     if (!pomodoro.isTimerActive) {
         const newWorkDuration = parseInt(workDurationInput.value, 10);
@@ -44,11 +41,9 @@ function updateDuration() {
         }
     }
 }
-// Add event listener to the "Update" button for updating durations
 if (updateDurationButton) {
     updateDurationButton.addEventListener('click', updateDuration);
 }
-// Add event listeners to buttons
 if (startButton) {
     startButton.addEventListener('click', () => {
         pomodoro.start();
@@ -57,7 +52,7 @@ if (startButton) {
         console.log('Start button found');
         console.log(pomodoro.isTimerActive);
         const startButton = document.getElementById('startButton');
-        startButton.disabled = true; // Disable the button
+        startButton.disabled = true;
         console.log('Disabled start button');
     });
 }

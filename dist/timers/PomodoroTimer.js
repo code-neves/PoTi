@@ -2,7 +2,6 @@ var PomodoroMode;
 (function (PomodoroMode) {
     PomodoroMode["Focus"] = "focus";
     PomodoroMode["Break"] = "break";
-    PomodoroMode["Transition"] = "transition";
     PomodoroMode["None"] = "none";
 })(PomodoroMode || (PomodoroMode = {}));
 class PomodoroTimer {
@@ -12,11 +11,11 @@ class PomodoroTimer {
         this.breakDuration = breakMinutes * 60 * 1000;
         this.actualMode = PomodoroMode.Focus;
         this.timeRemaining = this.workDuration;
-        this.onModeChange = onModeChange; // Assign the callback function passed as an argument
+        this.onModeChange = onModeChange;
         this.isTimerActive = false;
         this.formattedTime = this.formatTime(this.timeRemaining);
-        this.focusNotificationSound = new Audio('./assets/audio/focusnoti.mp3'); // Replace 'focus_notification.mp3' with Focus sound file
-        this.breakNotificationSound = new Audio('./assets/audio/breaknoti.mp3'); // Replace 'break_notification.mp3' with Break sound file
+        this.focusNotificationSound = new Audio('./assets/audio/focusnoti.mp3');
+        this.breakNotificationSound = new Audio('./assets/audio/breaknoti.mp3');
     }
     formatTime(timeInMilliseconds) {
         const minutes = Math.floor(timeInMilliseconds / 60000);
@@ -29,34 +28,26 @@ class PomodoroTimer {
     updateTimerDisplay() {
         const timerDisplay = document.getElementById('timerDisplay');
         if (timerDisplay) {
-            timerDisplay.textContent = this.formattedTime; // Use the formattedTime property
+            timerDisplay.textContent = this.formattedTime;
         }
     }
     tick() {
         this.timeRemaining -= 1000;
         if (this.timeRemaining <= 0) {
             if (this.actualMode === PomodoroMode.Focus) {
-                // Switch from Focus to Break
-                console.log('focando');
                 this.actualMode = PomodoroMode.Break;
                 this.timeRemaining = this.breakDuration;
-                this.playNotificationSound(this.breakNotificationSound); // Play Break notification sound
+                this.playNotificationSound(this.breakNotificationSound);
             }
             else if (this.actualMode === PomodoroMode.Break) {
-                console.log('brekando');
                 this.actualMode = PomodoroMode.Focus;
                 this.timeRemaining = this.workDuration;
-                this.playNotificationSound(this.focusNotificationSound); // Play Focus notification sound
+                this.playNotificationSound(this.focusNotificationSound);
             }
             this.playNotificationSound();
-            // Use the existing method to update the background color
             this.onModeChange(this.actualMode);
-            // Add console.log for debugging
-            console.log('Mode changed to:', this.actualMode);
         }
-        // Update the formatted time
         this.updateFormattedTime();
-        // Update the document title with mode and time remaining
         document.title = `PoTi - ${this.actualMode} (${this.formattedTime})`;
         this.updateTimerDisplay();
     }
@@ -74,7 +65,6 @@ class PomodoroTimer {
             clearInterval(this.timerInterval);
             this.timerInterval = null;
         }
-        // Initialize the timer interval
         this.timerInterval = setInterval(() => {
             this.tick();
             if (!this.isTimerActive) {
@@ -84,6 +74,10 @@ class PomodoroTimer {
     }
     stop() {
         this.isTimerActive = false;
+        const statusMessage = document.getElementById('statusMessage');
+        if (statusMessage) {
+            statusMessage.textContent = 'Timer Stopped';
+        }
         if (this.timerInterval !== null) {
             clearInterval(this.timerInterval);
             this.timerInterval = null;
@@ -95,6 +89,11 @@ class PomodoroTimer {
         this.timeRemaining = this.workDuration;
         this.updateFormattedTime();
         this.updateTimerDisplay();
+        const statusMessage = document.getElementById('statusMessage');
+        if (statusMessage) {
+            statusMessage.textContent = 'Timer Reset';
+        }
+        document.title = `PoTi`;
     }
     getTimerActiveStatus() {
         return this.isTimerActive;
@@ -108,7 +107,6 @@ class PomodoroTimer {
         else if (this.actualMode === PomodoroMode.Break) {
             this.timeRemaining = this.breakDuration;
         }
-        // Update the formatted time with the new timeRemaining value
         this.updateFormattedTime();
         this.updateTimerDisplay();
     }

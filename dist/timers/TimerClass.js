@@ -1,4 +1,3 @@
-// timers/Timer.ts
 class Timer {
     constructor(durationMinutes, callback) {
         this.timerInterval = null;
@@ -8,7 +7,7 @@ class Timer {
     startTimer() {
         this.timerInterval = setInterval(() => {
             this.callback();
-            this.stop(); // Automatically stop the timer after the callback
+            this.stop();
         }, this.duration);
     }
     start() {

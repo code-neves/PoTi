@@ -1,5 +1,3 @@
-// timers/Timer.ts
-
 class Timer {
   private duration: number;
   private timerInterval: NodeJS.Timeout | null = null;
@@ -13,9 +11,12 @@ class Timer {
   private startTimer() {
     this.timerInterval = setInterval(() => {
       this.callback();
-      this.stop(); // Automatically stop the timer after the callback
+      this.stop(); 
     }, this.duration);
   }
+
+
+
 
   public start() {
     if (this.timerInterval === null) {
