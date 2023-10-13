@@ -1,12 +1,14 @@
 # PoTi - Pomodoro Timer
 
-PoTi (Pomodoro Timer) is a simple web-based timer application that helps you manage your work and break intervals effectively. It's designed to improve productivity and time management by following the Pomodoro Technique.
+PoTi (Pomodoro Timer) is a simple web-based timer application that helps you manage your focus and break intervals effectively. It's designed to improve productivity and time management by following the Pomodoro Technique.
+
+![image](https://github.com/code-neves/PoTi/assets/127349682/de1aa340-22cf-4161-aa4c-4de244287705)
 
 ## Features
 
-- **Customizable Timer**: A customizable timer with work and break duration settings.
-- **Dynamic Theming**: The application provides visual cues, indicating whether it's time to focus or take a break.
-- **Audio Notifications**: You'll receive audio notifications when it's time to switch between work and break periods.
+- **Customizable Timer**: A customizable timer with focus and break duration settings.
+- **Dynamic Theming**: The application provides 3 different themes, default, focus-mode, break-mode.
+- **Audio Notifications**: You'll receive audio notifications when it's time to switch between focus and break periods.
 - **Easy to use Controls**: Easily start, pause, and reset the timer to adapt to your work routine.
 - **Status Messages**: Get status messages, guiding you through the timer's current state.
 - **Responsive Design**: PoTi is responsive and can be used on various devices.
@@ -18,7 +20,7 @@ PoTi (Pomodoro Timer) is a simple web-based timer application that helps you man
 
 1. Clone this repository or download the code.
 2. Open the `index.html` file in your web browser.
-3. Configure your work and break durations.
+3. Configure your focus and break durations.
 4. Click the "Start" button to begin the timer.
 5. Enjoy improved productivity and time management!
 
@@ -29,7 +31,7 @@ PoTi (Pomodoro Timer) is a simple web-based timer application that helps you man
 
 ## Usage
 
-- Configure work and break durations by filling in the input fields.
+- Configure focus and break durations by filling in the input fields.
 - Click the "Update Duration" button to save your settings.
 - Start the timer by clicking the "Start" button.
 - Pause the timer using the "Stop" button.
