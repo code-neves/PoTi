@@ -4,15 +4,14 @@ PoTi (Pomodoro Timer) is a simple web-based timer application that helps you man
 
 ## Features
 
-- **Pomodoro Timer**: A customizable timer with work and break duration settings.
-- **Visual Feedback**: The application provides visual cues, indicating whether it's time to focus or take a break.
+- **Customizable Timer**: A customizable timer with work and break duration settings.
+- **Dynamic Theming**: The application provides visual cues, indicating whether it's time to focus or take a break.
 - **Audio Notifications**: You'll receive audio notifications when it's time to switch between work and break periods.
-- **Start, Pause, and Reset**: Easily start, pause, and reset the timer to adapt to your work routine.
-- **User Interaction**: The timer ensures that audio notifications only start after user interaction.
+- **Easy to use Controls**: Easily start, pause, and reset the timer to adapt to your work routine.
 - **Status Messages**: Get status messages, guiding you through the timer's current state.
 - **Responsive Design**: PoTi is responsive and can be used on various devices.
 
-## Getting Started
+## Getting Started [ LOCALLY ]
 
 1. Clone this repository or download the code.
 2. Open the `index.html` file in your web browser.
