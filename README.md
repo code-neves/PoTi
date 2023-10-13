@@ -11,6 +11,9 @@ PoTi (Pomodoro Timer) is a simple web-based timer application that helps you man
 - **Status Messages**: Get status messages, guiding you through the timer's current state.
 - **Responsive Design**: PoTi is responsive and can be used on various devices.
 
+## Getting Started [ DEPLOY ]
+1. Open this Link https://code-neves.github.io/PoTi/
+
 ## Getting Started [ LOCALLY ]
 
 1. Clone this repository or download the code.
