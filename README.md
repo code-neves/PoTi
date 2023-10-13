@@ -2,12 +2,12 @@
 
 PoTi (Pomodoro Timer) is a simple web-based timer application that helps you manage your focus and break intervals effectively. It's designed to improve productivity and time management by following the Pomodoro Technique.
 
-![image](https://github.com/code-neves/PoTi/assets/127349682/de1aa340-22cf-4161-aa4c-4de244287705)
+https://github.com/code-neves/PoTi/assets/127349682/505b3bfe-2ea7-45ad-b5a1-dd0f2a63a61e
 
 ## Features
 
 - **Customizable Timer**: A customizable timer with focus and break duration settings.
-- **Dynamic Theming**: The application provides 3 different themes, default, focus-mode, break-mode.
+- **Dynamic Theming**: The application provides 3 different themes, default, focus mode, break mode.
 - **Audio Notifications**: You'll receive audio notifications when it's time to switch between focus and break periods.
 - **Easy to use Controls**: Easily start, pause, and reset the timer to adapt to your work routine.
 - **Status Messages**: Get status messages, guiding you through the timer's current state.
@@ -26,8 +26,9 @@ PoTi (Pomodoro Timer) is a simple web-based timer application that helps you man
 
 ## Screenshots
 
-![Screenshot 1](/screenshots/screenshot1.png)
-![Screenshot 2](/screenshots/screenshot2.png)
+![image](https://github.com/code-neves/PoTi/assets/127349682/4c37fa1f-e083-4ee9-a910-5367e5f3c230)
+![image](https://github.com/code-neves/PoTi/assets/127349682/bb7bc451-be4a-4e21-8335-5d12bf97fab8)
+![image](https://github.com/code-neves/PoTi/assets/127349682/7098812b-c914-4d79-98a0-13e5555d9b0e)
 
 ## Usage
 
@@ -54,8 +55,8 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-- Thank you to the Pomodoro Technique for providing a productive time management method.
-- Audio notifications courtesy of [example.com](example.com).
+- Thank you to all my colleagues at the Santander Coders #1004.
+- Audio notifications courtesy of [Great Sound Effects](https://youtu.be/hBJ5NvMj21M).
 
 ## About
 
