@@ -59,6 +59,6 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 PoTi is an open-source project developed to improve productivity through effective time management. Feel free to use it, contribute, or customize it for your specific needs.
 
-[![GitHub](https://img.shields.io/github/license/code-neves/pomodoro-timer)](https://github.com/code-neves/pomodoro-timer/LICENSE.md)
+[![GitHub](https://img.shields.io/github/license/code-neves/PoTi)](https://github.com/code-neves/PoTi/LICENSE.md)
 
 
