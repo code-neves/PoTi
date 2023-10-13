@@ -167,8 +167,8 @@ header{
     outline-color: #fff !important;
 }
 .break-mode{
-    mix-blend-mode: luminosity;
-    background-color: #292929;
+    mix-blend-mode: difference;
+    background-color: #0e16ff;
     transition: 1s background-color ease;
 }
 #statusMessage{
