@@ -2,7 +2,9 @@
 
 PoTi (Pomodoro Timer) is a simple web-based timer application that helps you manage your focus and break intervals effectively. It's designed to improve productivity and time management by following the Pomodoro Technique.
 
+
 https://github.com/code-neves/PoTi/assets/127349682/505b3bfe-2ea7-45ad-b5a1-dd0f2a63a61e
+
 
 ## Features
 
