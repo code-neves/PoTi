@@ -1,3 +1,5 @@
+import { PomodoroUIManager } from "../ui/UiManager.js";
+const UI = new PomodoroUIManager();
 var PomodoroMode;
 (function (PomodoroMode) {
     PomodoroMode["Focus"] = "focus";
@@ -17,20 +19,6 @@ class PomodoroTimer {
         this.focusNotificationSound = new Audio('./assets/audio/focusnoti.mp3');
         this.breakNotificationSound = new Audio('./assets/audio/breaknoti.mp3');
     }
-    formatTime(timeInMilliseconds) {
-        const minutes = Math.floor(timeInMilliseconds / 60000);
-        const seconds = ((timeInMilliseconds % 60000) / 1000).toFixed(0);
-        return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-    }
-    updateFormattedTime() {
-        this.formattedTime = this.formatTime(this.timeRemaining);
-    }
-    updateTimerDisplay() {
-        const timerDisplay = document.getElementById('timerDisplay');
-        if (timerDisplay) {
-            timerDisplay.textContent = this.formattedTime;
-        }
-    }
     tick() {
         this.timeRemaining -= 1000;
         if (this.timeRemaining <= 0) {
@@ -48,23 +36,41 @@ class PomodoroTimer {
             this.onModeChange(this.actualMode);
         }
         this.updateFormattedTime();
-        document.title = `PoTi - ${this.actualMode} (${this.formattedTime})`;
         this.updateTimerDisplay();
+        this.updateTabTitle();
+    }
+    formatTime(timeInMilliseconds) {
+        const minutes = Math.floor(timeInMilliseconds / 60000);
+        const seconds = ((timeInMilliseconds % 60000) / 1000).toFixed(0);
+        return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    }
+    updateFormattedTime() {
+        this.formattedTime = this.formatTime(this.timeRemaining);
+    }
+    updateTimerDisplay() {
+        return UI.prop.timerDisplay ? UI.prop.timerDisplay.textContent = this.formattedTime : null;
     }
     playNotificationSound(sound) {
-        if (sound) {
-            sound.play();
-        }
+        return sound ? sound.play() : null;
     }
-    start() {
-        this.updateTimerDisplay();
-        this.isTimerActive = true;
-        this.playNotificationSound(this.focusNotificationSound);
-        this.onModeChange(this.actualMode);
+    updateTabTitle() {
+        document.title = `[${this.formattedTime}] ${this.actualMode} - PoTi `;
+    }
+    checkForInterval() {
         if (this.timerInterval !== null) {
             clearInterval(this.timerInterval);
             this.timerInterval = null;
         }
+    }
+    startTick() {
+        this.updateTimerDisplay();
+        this.isTimerActive = true;
+        this.playNotificationSound(this.focusNotificationSound);
+        this.onModeChange(this.actualMode);
+        UI.prop.start_B ? UI.prop.start_B.disabled = true : null;
+        UI.prop.stop_B ? UI.prop.stop_B.disabled = false : null;
+        UI.prop.reset_B ? UI.prop.reset_B.disabled = false : null;
+        this.checkForInterval();
         this.timerInterval = setInterval(() => {
             this.tick();
             if (!this.isTimerActive) {
@@ -72,28 +78,21 @@ class PomodoroTimer {
             }
         }, 1000);
     }
-    stop() {
+    Pause() {
         this.isTimerActive = false;
-        const statusMessage = document.getElementById('statusMessage');
-        if (statusMessage) {
-            statusMessage.textContent = 'Timer Stopped';
-        }
-        if (this.timerInterval !== null) {
-            clearInterval(this.timerInterval);
-            this.timerInterval = null;
-        }
+        this.checkForInterval();
+        UI.prop.stop_B ? UI.prop.stop_B.disabled = true : null;
+        UI.prop.start_B ? UI.prop.start_B.disabled = false : null;
     }
-    reset() {
-        this.stop();
-        this.isTimerActive = false;
+    ResetAndPause() {
+        this.Pause();
         this.timeRemaining = this.workDuration;
         this.updateFormattedTime();
         this.updateTimerDisplay();
-        const statusMessage = document.getElementById('statusMessage');
-        if (statusMessage) {
-            statusMessage.textContent = 'Timer Reset';
-        }
+        UI.prop.start_B ? UI.prop.start_B.disabled = false : null;
+        UI.prop.reset_B ? UI.prop.reset_B.disabled = true : null;
         document.title = `PoTi`;
+        return UI.prop.statusMessage ? UI.prop.statusMessage.textContent = 'Timer was reset' : null;
     }
     getTimerActiveStatus() {
         return this.isTimerActive;
