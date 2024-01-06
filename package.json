@@ -11,6 +11,9 @@
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^20.5.9",
-    "typescript": "^5.2.2"
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "bootstrap-icons": "^1.11.3"
   }
 }

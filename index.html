@@ -7,34 +7,55 @@
     <title>Pomodoro Timer</title>
     <link rel="stylesheet" href="./css/style.css">
     <link rel="shortcut icon" href="./assets/favicon.ico" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+        rel="stylesheet">
 </head>
 
 <body>
     <main>
-        <header>
-            <h1>PoTi</h1>
+        <div class="settings" id="settings-bg">
+            <div class="top-but-cont" id="settings-menu">
+                <div class="settings-label"><i class="bi bi-arrow-left-square-fill"></i>Settings</div>
 
-            <div class="top-but-cont">
-                <div class="focus-container">
-                    <label for="workDurationInput">Focus:</label>
-                    <input type="number" id="workDurationInput" max="600" value="25" min="1">
+                <h3>Duration</h3>
+                <div class="settings-duration">
+                    <div class="focus container_I">
+                    <label for="focusNumber_I">Focus: </label>
+                    <input type="number" id="focusNumber_I" max="60" value="15" min="15">
+                    <input type="range" id="focusRange_I" min="15" list="values" step="5" max="60" class="range">
                 </div>
-                <div class="break-container">
+
+                <div class="break container_I">
                     <label for="breakDurationInput">Break:</label>
-                    <input type="number" id="breakDurationInput" max="600" value="5" min="1">
+                    <input type="range" id="breakRange_I" min="5" list="values2" step="5" max="20" class="range">
+                    <input type="number" id="breakNumber_I" max="20" value="5" min="5">
                 </div>
+
+                <h3>Sound notification:</h3>
+            </div>
                 <div class="update-but">
-                    <button id="updateDuration">Update</button>
+                    <button id="updateDuration">Update timer</button>
                 </div>
             </div>
+        </div>
+
+        <header>
+            <div style="display: flex; gap: 6px; align-items: center;"><h1>PoTi</h1><i id="clock" class="bi bi-clock-history"></i></div>
+            
+            <button id="settingsGear_B" class="but"><i class="bi bi-gear-fill"></i><span>Settings</span></button>
+
         </header>
 
         <div id="timerDisplay">25:00</div>
         <div id="statusMessage">Pomodoro by Renato</div>
         <div class="but-container">
-            <button id="startButton">Start</button>
-            <button id="stopButton">Stop</button>
-            <button id="resetButton">Reset</button>
+            <button id="start_B" class=" but"><i class="bi bi-play-fill"></i><span>Start</span></button>
+            <button id="stop_B" class=" but" disabled><i class="bi bi-pause-fill"></i><span>Pause</span></button>
+            <button id="reset_B" class=" but" disabled><i
+                    class="bi bi-arrow-clockwise"></i><span>Reset</span></button>
         </div>
     </main>
     <script type="module" src="./dist/index.js"></script>
