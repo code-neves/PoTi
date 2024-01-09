@@ -41,7 +41,7 @@ export function updateBackgroundColor(mode) {
         switch (mode) {
             case PomodoroMode.Focus:
                 document.body.classList.add('focus-mode');
-                main.style.backgroundImage = 'url(../../assets/bg-overlay.png)';
+                main.style.backgroundImage = "url('../../assets/bg-overlay.png')";
                 break;
             case PomodoroMode.Break:
                 document.body.classList.add('break-mode');
