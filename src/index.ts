@@ -1,14 +1,28 @@
 
-import { log } from 'console';
 import { PomodoroTimer, PomodoroMode } from './timers/PomodoroTimer.js';
 import { PomodoroUIManager } from './ui/UiManager.js';
 
 const UI = new PomodoroUIManager();
+UI.loadSettings();
 
-const pomodoro = new PomodoroTimer(25, 5, (mode) => {
+let focusDuration = 22;
+let breakDuration = 5;
+
+if (localStorage) {
+  const storedFocusDuration = localStorage.getItem('focusDuration');
+  const storedBreakDuration = localStorage.getItem('breakDuration');
+  
+  if (storedFocusDuration && storedBreakDuration) {
+    focusDuration = parseInt(storedFocusDuration);
+    breakDuration = parseInt(storedBreakDuration);
+  }
+}
+
+const pomodoro = new PomodoroTimer(focusDuration, breakDuration, (mode) => {
   UI.handleModeChange(mode);
 });
-
+pomodoro.updateTimerDisplay();
+console.log(pomodoro.modeNotifications);
 
 function updateDuration() {
   if (!pomodoro.isTimerActive) {
@@ -100,11 +114,20 @@ if (UI.prop.settingsGear) {
     }
 
   });
+  if (UI.prop.settingsExit) {
+    UI.prop.settingsExit.addEventListener('click', () => {
+      console.log('iu');
+      
+      UI.prop.settingsBg ? UI.prop.settingsBg.classList.remove('open') : null;
+      if (pomodoro.isTimerActive){pomodoro.startTick()}
+    });
+  }
 
   if (UI.prop.updateDurationButton) {
     UI.prop.updateDurationButton.addEventListener('click', () => {
       UI.prop.settingsBg ? UI.prop.settingsBg.classList.remove('open') : null;
       pomodoro.ResetAndPause()
+      UI.saveSettings()
     });
   }
 }
@@ -119,4 +142,33 @@ if (UI.prop.focusRange_I) {
   });
 }
 
+if (UI.prop.breakNumber_I && UI.prop.breakRange_I) { 
+  UI.prop.breakNumber_I.value = UI.prop.breakRange_I.value; }
+if (UI.prop.breakRange_I) {
+  UI.prop.breakRange_I.addEventListener("input", (event: any) => {
+    UI.prop.breakNumber_I.value = event.target.value;
+    
+  });
+}
+
+if (UI.prop.modeNotificationsSwitch) {
+  addEventListener('click', () => {
+    if (UI.prop.modeNotificationsSwitch?.checked) {
+       pomodoro.modeNotifications = true;
+    } else if (!UI.prop.modeNotificationsSwitch?.checked) {
+       pomodoro.modeNotifications = false;
+    }
+  }
+  );
+}
+if (UI.prop.tabTitleSwitch) {
+  addEventListener('click', () => {
+    if (UI.prop.tabTitleSwitch?.checked) {
+      pomodoro.tabTitleTimer = true;
+    } else if (!UI.prop.tabTitleSwitch?.checked) {
+      pomodoro.tabTitleTimer = false;
+    }
+  }
+  );
+}
 
