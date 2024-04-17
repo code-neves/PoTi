@@ -1,4 +1,8 @@
 
+import { PomodoroUIManager } from "../ui/UiManager.js";
+
+const UI = new PomodoroUIManager();
+
 enum PomodoroMode {
   Focus = 'focus',
   Break = 'break',
@@ -8,12 +12,16 @@ enum PomodoroMode {
 class PomodoroTimer {
   private workDuration: number;
   private breakDuration: number;
-  public actualMode: PomodoroMode;
+
   private timeRemaining: number;
-  private onModeChange: (mode: PomodoroMode) => void;
-  public isTimerActive: boolean;
   private timerInterval: NodeJS.Timeout | null = null;
   private formattedTime: string;
+  public isTimerActive: boolean;
+  public modeNotifications: boolean;
+  public tabTitleTimer: boolean;
+  public actualMode: PomodoroMode;
+  private onModeChange: (mode: PomodoroMode) => void;
+
   private focusNotificationSound: HTMLAudioElement;
   private breakNotificationSound: HTMLAudioElement;
 
@@ -29,10 +37,47 @@ class PomodoroTimer {
     this.onModeChange = onModeChange;
     this.isTimerActive = false;
     this.formattedTime = this.formatTime(this.timeRemaining);
+    this.modeNotifications = false;
+    this.tabTitleTimer = false;
     this.focusNotificationSound = new Audio('./assets/audio/focusnoti.mp3');
     this.breakNotificationSound = new Audio('./assets/audio/breaknoti.mp3');
   }
 
+  
+  private tick() {
+    this.timeRemaining -= 1000;
+    
+    if (this.timeRemaining <= 0) {
+      if (this.actualMode === PomodoroMode.Focus) {
+        
+        this.actualMode = PomodoroMode.Break;
+        this.timeRemaining = this.breakDuration;
+        if (this.modeNotifications){
+          this.playNotificationSound(this.breakNotificationSound);
+        }
+        
+      } else if (this.actualMode === PomodoroMode.Break) {
+
+        this.actualMode = PomodoroMode.Focus;
+        this.timeRemaining = this.workDuration;
+        if (this.modeNotifications){
+          this.playNotificationSound(this.focusNotificationSound);
+        }
+      }
+      if(this.modeNotifications){
+        this.playNotificationSound();
+      }
+      this.onModeChange(this.actualMode);
+
+    }
+
+    this.updateFormattedTime();
+    this.updateTimerDisplay();
+    if (this.tabTitleTimer){
+      this.updateTabTitle();
+    }
+  }
+  
   private formatTime(timeInMilliseconds: number): string {
     const minutes = Math.floor(timeInMilliseconds / 60000);
     const seconds = ((timeInMilliseconds % 60000) / 1000).toFixed(0);
@@ -42,70 +87,37 @@ class PomodoroTimer {
   private updateFormattedTime() {
     this.formattedTime = this.formatTime(this.timeRemaining);
   }
-  private updateTimerDisplay() {
-    const timerDisplay = document.getElementById('timerDisplay');
-    if (timerDisplay) {
-      timerDisplay.textContent = this.formattedTime;
-    }
+  
+  public updateTimerDisplay() {
+    return UI.prop.timerDisplay? UI.prop.timerDisplay.textContent = this.formattedTime : null;
   }
-
-  private tick() {
-    this.timeRemaining -= 1000;
-
-    if (this.timeRemaining <= 0) {
-      if (this.actualMode === PomodoroMode.Focus) {
-
-        this.actualMode = PomodoroMode.Break;
-        this.timeRemaining = this.breakDuration;
-        this.playNotificationSound(this.breakNotificationSound);
-      } else if (this.actualMode === PomodoroMode.Break) {
-
-        this.actualMode = PomodoroMode.Focus;
-        this.timeRemaining = this.workDuration;
-        this.playNotificationSound(this.focusNotificationSound);
-      }
-
-      this.playNotificationSound();
-
-
-      this.onModeChange(this.actualMode);
-
-    }
-
-
-    this.updateFormattedTime();
-
-
-    document.title = `PoTi - ${this.actualMode} (${this.formattedTime})`;
-
-    this.updateTimerDisplay();
-
-  }
-
-
-
-
 
   private playNotificationSound(sound?: HTMLAudioElement) {
-    if (sound) {
-      sound.play();
-    }
+    return sound ? sound.play() : null;
   }
 
-  public start() {
-    this.updateTimerDisplay();
-    this.isTimerActive = true;
-    this.playNotificationSound(this.focusNotificationSound);
-
-
-    this.onModeChange(this.actualMode);
-
-
+  private updateTabTitle() {
+    document.title = `[${this.formattedTime}] ${this.actualMode} - PoTi `;
+  }
+  private checkForInterval() {
     if (this.timerInterval !== null) {
       clearInterval(this.timerInterval);
       this.timerInterval = null;
     }
+  }
 
+  public startTick() {
+    this.updateTimerDisplay();
+    this.isTimerActive = true;
+    if(this.modeNotifications){
+      this.playNotificationSound(this.focusNotificationSound);
+    }
+    this.onModeChange(this.actualMode);
+    UI.prop.start_B ? UI.prop.start_B.disabled = true : null;
+    UI.prop.stop_B ? UI.prop.stop_B.disabled = false : null;
+    UI.prop.reset_B ? UI.prop.reset_B.disabled = false : null;
+
+    this.checkForInterval();
 
     this.timerInterval = setInterval(() => {
       this.tick();
@@ -115,29 +127,23 @@ class PomodoroTimer {
     }, 1000);
   }
 
-  public stop() {
+  public Pause() {
     this.isTimerActive = false;
-    const statusMessage = document.getElementById('statusMessage');
-    if (statusMessage) {
-      statusMessage.textContent = 'Timer Stopped';
-    }
-    if (this.timerInterval !== null) {
-      clearInterval(this.timerInterval);
-      this.timerInterval = null;
-    }
+    this.checkForInterval();
+    UI.prop.stop_B ? UI.prop.stop_B.disabled = true : null;
+    UI.prop.start_B ? UI.prop.start_B.disabled = false : null;
   }
 
-  public reset() {
-    this.stop();
-    this.isTimerActive = false;
+  public ResetAndPause() {
+    this.Pause();
     this.timeRemaining = this.workDuration;
     this.updateFormattedTime();
     this.updateTimerDisplay();
-    const statusMessage = document.getElementById('statusMessage');
-    if (statusMessage) {
-      statusMessage.textContent = 'Timer Reset';
-    }
+    UI.prop.start_B ? UI.prop.start_B.disabled = false : null;
+    UI.prop.reset_B ? UI.prop.reset_B.disabled = true : null;
+
     document.title = `PoTi`;
+    return UI.prop.statusMessage? UI.prop.statusMessage.textContent = 'Timer was reset': null;
   }
 
   public getTimerActiveStatus(): boolean {
@@ -155,7 +161,6 @@ class PomodoroTimer {
     }
 
     this.updateFormattedTime();
-
     this.updateTimerDisplay();
   }
 }
